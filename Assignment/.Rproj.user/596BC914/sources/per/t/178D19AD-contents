@@ -1,0 +1,15 @@
+function(directory = "specdata", pollutant, id = 1:332){
+  myfiles_subset = myfiles[id]
+  dataframe_use = ldply(myfiles_subset, read_csv)
+  if(pollutant == "sulfate"){
+    means_unprocessed = dataframe_use[2]
+    means_processed = means_unprocessed[!is.na(means_unprocessed)]
+    means = mean(means_processed)
+  }
+  else{
+    means_unprocessed = dataframe_use[3]
+    means_processed = means_unprocessed[!is.na(means_unprocessed)]
+    means = mean(means_processed)
+  }
+  means
+}

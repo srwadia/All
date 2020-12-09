@@ -1,0 +1,15 @@
+corr = function(directory = "specdata", threshold = 0){
+  return_vec = numeric()
+  for (i in 1:nrow(df_all)){
+    if(df_all[i,2] > threshold){
+      myfiles_subset = myfiles[df_all[i,1]]
+      dataframe_use = ldply(myfiles_subset, read_csv)
+      dataframe_clean = na.omit(dataframe_use)
+      sulfur = dataframe_clean[,2]
+      nitrate = dataframe_clean[,3]
+      corr_vec = cor(sulfur, nitrate)
+      return_vec = append(return_vec, corr_vec)
+    }
+  }
+  return_vec
+}

@@ -1,0 +1,27 @@
+complete = function(directory = "specdata", id = 1:332){
+  df_1 = data.frame(matrix(ncol = 2, nrow = 0))
+  columns_df = c("id","nobs")
+  colnames(df_1) = columns_df
+  for(i in id){
+    n_obs = 0
+    my_subset = myfiles[i]
+    df_use = ldply(my_subset, read_csv)
+    numrows = nrow(df_use)
+    for(i in 1:numrows){
+      row_vec = df_use[i,]
+      boolean_vec = is.na(row_vec)
+      incomplete = "TRUE" %in% boolean_vec
+      if(incomplete == TRUE){
+        n_obs = n_obs
+      }
+      else{
+        n_obs = n_obs + 1
+      }
+    }
+    add_vec = c(df_use[1,4],n_obs)
+    y = nrow(df_1)
+    df_1[y+1,] = add_vec
+  }
+  df_1
+}
+
